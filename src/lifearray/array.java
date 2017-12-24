@@ -6,7 +6,7 @@ public class array {
 	private char[][] world = new char[HEIGHT][WIDTH];
 	private final char Y = '*'; // 用字符*代表一个细胞
 	private final char No = ' ';
-
+//
 	/**
 	 * 构造器。使用预定义的数据初始化world.
 	 */
