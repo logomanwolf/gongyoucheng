@@ -1,24 +1,54 @@
 package lifearray;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
 public class array {
 	private final int HEIGHT = 15;// 二维游戏世界的大小。HEIGHT*WIDTH 个字符
 	private final int WIDTH = 60;
 	private char[][] world = new char[HEIGHT][WIDTH];
 	private final char Y = '*'; // 用字符*代表一个细胞
 	private final char No = ' ';
-//
+	private static int result; 
+	//
 	/**
 	 * 构造器。使用预定义的数据初始化world.
 	 */
-	array() {
+	public array() {
 		world[3][4] = world[3][5] = world[3][6] = Y;
 		// glider
 		world[10][4] = world[10][5] = world[10][6] = world[11][6] = world[12][5] = Y;
 	}
 
+	array(String filename) throws IOException{
+	   try {
+		   FileInputStream f = new FileInputStream(filename); 
+		BufferedReader bf=new BufferedReader(new InputStreamReader(f));
+		String str;
+		while((str=bf.readLine())!=null){
+			int i=0;
+		String [] numberstr=str.split(" ");
+		for(int j=0;j<numberstr.length;i++){
+			world[i][j]=Y;
+		}
+		i++;
+		}
+	} catch (FileNotFoundException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+   }
+
 	/**
 	 * 在控制台中输出world数据
 	 */
+
 	private void print() {
 		for (int height = 0; height < HEIGHT; height++) {
 			for (int width = 0; width < WIDTH; width++) {
@@ -42,7 +72,7 @@ public class array {
 	 * @参数 x x坐标，或col 格子所在列，
 	 * @返回值 邻居数目.
 	 */
-	private int getNeighbors(int y, int x) {
+	public int getNeighbors(int y, int x) {
 		int n = 0; // neighbor
 		n += cellState(y - 1, x - 1);
 		n += cellState(y - 1, x);
@@ -89,21 +119,24 @@ public class array {
 		world = temp;
 	}
 
-	/**
-	 * 在BlueJ中，你可以创建一个simpleGOL对象，交替调用其print()、nextWorld()方法。
-	 */
-	public static void main(String[] a) {
+	public void init() {
 		array gol = new array();
-		String end;
-		int generation = 0;
-		gol.print();
-		java.util.Scanner in = new java.util.Scanner(System.in);
-		do {
-			System.out.printf("Generation %d\n", ++generation);
-			gol.nextWorld();
-			gol.print();
-			System.out.printf("Press q to quit or other key to continue: ");
-			end = in.next();
-		} while (!"q".equals(end));
+		
+	}
+	/*
+	 * public static void main(String[] a) { array gol = new array(); String
+	 * end; int generation = 0; gol.print(); java.util.Scanner in = new
+	 * java.util.Scanner(System.in); do { System.out.printf("Generation %d\n",
+	 * ++generation); gol.nextWorld(); gol.print();
+	 * System.out.printf("Press q to quit or other key to continue: "); end =
+	 * in.next(); } while (!"q".equals(end)); }
+	 */
+
+	public char[][] getWorld() {
+		return world;
+	}
+
+	public void setWorld(char[][] world) {
+		this.world = world;
 	}
 }
