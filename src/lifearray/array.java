@@ -15,7 +15,8 @@ public class array {
 	private char[][] world = new char[HEIGHT][WIDTH];
 	private final char Y = '*'; // 用字符*代表一个细胞
 	private final char No = ' ';
-	private static int result; 
+	private static int result;
+
 	//
 	/**
 	 * 构造器。使用预定义的数据初始化world.
@@ -26,24 +27,24 @@ public class array {
 		world[10][4] = world[10][5] = world[10][6] = world[11][6] = world[12][5] = Y;
 	}
 
-	array(String filename) throws IOException{
-	   try {
-		   FileInputStream f = new FileInputStream(filename); 
-		BufferedReader bf=new BufferedReader(new InputStreamReader(f));
-		String str;
-		while((str=bf.readLine())!=null){
-			int i=0;
-		String [] numberstr=str.split(" ");
-		for(int j=0;j<numberstr.length;i++){
-			world[i][j]=Y;
+	array(String filename) throws IOException {
+		try {
+			FileInputStream f = new FileInputStream(filename);
+			BufferedReader bf = new BufferedReader(new InputStreamReader(f));
+			String str;
+			while ((str = bf.readLine()) != null) {
+				int i = 0;
+				String[] numberstr = str.split(" ");
+				for (int j = 0; j < numberstr.length; i++) {
+					world[i][j] = Y;
+				}
+				i++;
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		i++;
-		}
-	} catch (FileNotFoundException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
 	}
-   }
 
 	/**
 	 * 在控制台中输出world数据
@@ -121,16 +122,34 @@ public class array {
 
 	public void init() {
 		array gol = new array();
-		
+		String end;
+		int generation = 0;
+		gol.print();
+		java.util.Scanner in = new java.util.Scanner(System.in);
+		do {
+			System.out.printf("Generation %d\n", ++generation);
+			gol.nextWorld();
+			gol.print();
+			System.out.printf("Press q to quit or other key to continue: ");
+			end = in.next();
+		} while (!"q".equals(end));
 	}
-	/*
-	 * public static void main(String[] a) { array gol = new array(); String
-	 * end; int generation = 0; gol.print(); java.util.Scanner in = new
-	 * java.util.Scanner(System.in); do { System.out.printf("Generation %d\n",
-	 * ++generation); gol.nextWorld(); gol.print();
-	 * System.out.printf("Press q to quit or other key to continue: "); end =
-	 * in.next(); } while (!"q".equals(end)); }
-	 */
+
+
+	public static void main(String[] a) {
+		array gol = new array();
+		String end;
+		int generation = 0;
+		gol.print();
+		java.util.Scanner in = new java.util.Scanner(System.in);
+		do {
+			System.out.printf("Generation %d\n", ++generation);
+			gol.nextWorld();
+			gol.print();
+			System.out.printf("Press q to quit or other key to continue: ");
+			end = in.next();
+		} while (!"q".equals(end));
+	}
 
 	public char[][] getWorld() {
 		return world;
